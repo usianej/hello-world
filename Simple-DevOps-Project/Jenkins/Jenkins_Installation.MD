@@ -46,7 +46,7 @@ Jenkins is a self-contained Java-based program, ready to run out-of-the-box, wit
    ### Start Jenkins
    ```sh
    # Start jenkins service
-   service jenkins start
+   systemctl start jenkins
 
    # Setup Jenkins to start at boot,
    chkconfig jenkins on
@@ -65,7 +65,10 @@ Jenkins is a self-contained Java-based program, ready to run out-of-the-box, wit
 - Change admin password
    - `Admin` > `Configure` > `Password`
 - Configure `java` path
-  - `Manage Jenkins` > `Global Tool Configuration` > `JDK`  
+  - `Manage Jenkins` > `Global Tool Configuration` > `JDK` 
+    enter: $JAVA_HOME 
+    PATH: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.amzn2.0.1.x86_64
+    
 - Create another admin user id
 
 ### Test Jenkins Jobs
