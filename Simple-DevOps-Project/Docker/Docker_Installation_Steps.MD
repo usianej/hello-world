@@ -11,8 +11,8 @@
    docker --version 
    
    # start docker services
-   service docker start
-   service docker status
+   systemctl start docker
+   systemctl status docker
    ```
 1. Create a user called dockeradmin
    ```sh
@@ -23,6 +23,25 @@
    ```
    usermod -aG docker dockeradmin
    ```
+### Connecting Docker to Jenkins 
+   - go to "manage Jenkins" > "manage plugins" > "available"
+      -search for "publish over ssh" and install it.
+   - go to "manage Jenkins" > "Configure System" 
+      - scroll down to "publish over SSH"
+         - provide the internal ip address of the server by runing # ip addr
+         - name the server "docker-host"
+         - username: dockeradmin
+         - select "Advanced"
+            - select "use password based authentication" 
+            - provide the password: dockeradmin
+            - test the connection #if it fails you must enable password authentication in sshd
+   #### Enabling Password Based authentication 
+      - go to your server: vi /etc/ssh/sshd_config
+         - enable password authentication to Yes
+         - restart the ssh demon: systemctl restart sshd
+      - test the connection on the jenkins webpage.
+
+
 ### Validation test
 1. Create a tomcat docker container by pulling a docker image from the public docker registry
    ```sh
