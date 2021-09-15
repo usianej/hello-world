@@ -28,7 +28,7 @@
       -search for "publish over ssh" and install it.
    - go to "manage Jenkins" > "Configure System" 
       - scroll down to "publish over SSH"
-         - provide the internal ip address of the server by runing # ip addr
+         - provide the private ip address of the server by runing # ip addr
          - name the server "docker-host"
          - username: dockeradmin
          - select "Advanced"
