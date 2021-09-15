@@ -57,7 +57,10 @@
 ### Validation test
 
 1. Create a directory /etc/ansible and create an inventory file called "hosts" add control node IP address in it. 
+   - add localhost and the ip you added to ssh to the /etc/ansible/hosts
    
+   - ssh-copy-id localhost ###Adds ssh key to local host
+
 1. Run ansible command as ansadmin user it should be successful (Master)
    ```sh 
    ansible all -m ping
