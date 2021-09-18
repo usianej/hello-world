@@ -10,6 +10,10 @@
     #sudo apt-get install unzip - if you dont have unzip in your system
     ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
     ```
+### This worked to install aws cli    
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
 
 1. Install kubectl on ubuntu instance
    ```sh
@@ -30,6 +34,7 @@
 
     ```
 1. Create an IAM user/role  with Route53, EC2, IAM and S3 full access
+select instance --> Actions --> Security --> Modify IAM roles
 
 1. Attach IAM role to ubuntu instance
    ```sh
@@ -40,17 +45,19 @@
 1. Create a Route53 private hosted zone (you can create Public hosted zone if you have a domain)
    ```sh
    Routeh53 --> hosted zones --> created hosted zone  
-   Domain Name: valaxy.net
+   Domain Name: ehonor.com
    Type: Private hosted zone for Amazon VPC. Make sure you are chosing right VPC if you have multiple
    ```
 
 1. create an S3 bucket
    ```sh
-    aws s3 mb s3://demo.k8s.valaxy.net
+    aws s3 mb s3://demo.k8.ehonor.com
    ```
 1. Expose environment variable:
    ```sh
-    export KOPS_STATE_STORE=s3://demo.k8s.valaxy.net
+    export KOPS_STATE_STORE=s3://demo.k8.ehonor.com 
+    # without this command you cannot work on the cluster
+    # you might need to run it periodically
    ```
 
 1. Create sshkeys before creating cluster
@@ -60,23 +67,25 @@
 
 1. Create kubernetes cluster definitions on S3 bucket
    ```sh
-   kops create cluster --cloud=aws --zones=ap-south-1b --name=demo.k8s.valaxy.net --dns-zone=valaxy.net --dns private 
+   kops create cluster --cloud=aws --zones=us-east-2b --name=demo.k8.ehonor.com --dns-zone=ehonor.com --dns private 
     ```
 
 1. Create kubernetes cluser
     ```sh
-    kops update cluster demo.k8s.valaxy.net --yes
+    kops update cluster demo.k8.ehonor.com --yes
     ```
 1. To cahnge the kubernetes master and worker instance sizes 
    ```sh 
    kops edit ig --name=<cluster_name> nodes
-   #kops edit ig --name=demo.k8s.valaxy.net nodes 
+   #kops edit ig --name=demo.k8.ehonor.com 
    kops edit ig --name=<cluster_name> master-<zone_name>
-   #kops edit ig --name=demo.k8s.valaxy.net master-ap-south-1b
-   ```
+   #kops edit ig --name=demo.k8.ehonor.com master-ap-south-1b
+   #kops update cluster demo.k8.ehonor.com --yes
+```
+
 1. to Delete cluster (try once your lab is done)
    ```sh 
-   kops delete cluster <cluster_name> --yes
+   kops delete cluster --name=demo.k8.ehonor.com --yes
    ```
 1. Validate your cluster
      ```sh
@@ -86,8 +95,14 @@
 1. To list nodes
    ```sh
    kubectl get nodes
-   ```
 
+### Set up ssh and ssh into a node   ```
+```sh
+ssh key-gen
+ssh -i ~/.ssh/id_rsa admin@api.demo.k8.ehonor.com
+# to remove a bad ssh run
+ssh-keygen -f "/root/.ssh/known_hosts" -R "api.demo.k8.ehonor.com"
+```
 
    
 #### Deploying Nginx pods on Kubernetes
