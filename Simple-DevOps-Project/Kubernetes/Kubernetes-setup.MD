@@ -53,6 +53,7 @@ select instance --> Actions --> Security --> Modify IAM roles
    ```sh
     aws s3 mb s3://demo.k8.ehonor.com
    ```
+   # you might need to use the web to create bucket if the cli does not work
 1. Expose environment variable:
    ```sh
     export KOPS_STATE_STORE=s3://demo.k8.ehonor.com 
@@ -69,7 +70,9 @@ select instance --> Actions --> Security --> Modify IAM roles
    ```sh
    kops create cluster --cloud=aws --zones=us-east-2b --name=demo.k8.ehonor.com --dns-zone=ehonor.com --dns private 
     ```
-
+   ```sh
+   kops create secret --name demo.k8.ehonor.com sshpublickey admin -i ~/.ssh/id_rsa.pub
+   ```
 1. Create kubernetes cluser
     ```sh
     kops update cluster demo.k8.ehonor.com --yes
@@ -79,7 +82,7 @@ select instance --> Actions --> Security --> Modify IAM roles
    kops edit ig --name=<cluster_name> nodes
    #kops edit ig --name=demo.k8.ehonor.com 
    kops edit ig --name=<cluster_name> master-<zone_name>
-   #kops edit ig --name=demo.k8.ehonor.com master-ap-south-1b
+   #kops edit ig --name=demo.k8.ehonor.com master-us-east-2b
    #kops update cluster demo.k8.ehonor.com --yes
 ```
 
