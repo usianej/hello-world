@@ -24,3 +24,5 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+
+# These files are placed in the master node

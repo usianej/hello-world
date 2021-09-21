@@ -1,6 +1,13 @@
 # Integrating Kubernetes cluster with Ansible
 
 1. Login to ansible server and copy public key onto kubernetes cluseter master account 
+from the k8 maagement console ssh into the k8 master node --> sudo and become root, go to the ~/.ssh/authorized_key and paste the id_rsa.pub from the ansible server on it.
+# you must ssh as the paticular user u used the key from
+ssh -i ~/.ssh/id_rsa root@3.15.196.52  # from ansible server
+
+# ssh -i ~/.ssh/id_rsa admin@api.demo.k8.ehonor.com #from kuberneties mht console to master server
+
+
 
 1. Update hosts file with new group called kubernetes and add kubernetes master in that. 
 
@@ -17,3 +24,4 @@
    ```sh
    wget <kubernetes-Master-IP>:31200
    ```
+ 
