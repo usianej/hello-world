@@ -12,3 +12,7 @@ spec:
     - port: 8080
       targetPort: 8080
       nodePort: 31200
+
+
+# These files are placed in the master node
+
